@@ -1,0 +1,23 @@
+MPE Local Bridge 是连接本地各系统与 MaaPipelineEditor 前端的桥梁服务，目前支持文件管理功能，更多集成即将更新！
+
+Usage:
+  mpelb [flags]
+  mpelb [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  config      配置管理命令
+  help        Help about any command
+  info        显示路径信息
+
+Flags:
+      --config string      配置文件路径
+  -h, --help               help for mpelb
+      --log-dir string     日志输出目录
+      --log-level string   日志级别 (DEBUG, INFO, WARN, ERROR)
+      --port int           WebSocket 监听端口
+      --portable           便携模式：使用可执行文件同目录存储配置
+      --root string        文件扫描根目录
+  -v, --version            显示版本号
+
+Use "mpelb [command] --help" for more information about a command.

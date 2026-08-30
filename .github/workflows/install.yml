@@ -1,0 +1,605 @@
+name: install
+
+on:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  changelog:
+    name: Generate changelog
+    runs-on: ubuntu-latest
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v4
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGES.md
+          GITHUB_REPO: ${{ github.repository }}
+
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - id: set_tag
+        run: |
+          # 检查标签格式
+          if [[ ${{ github.ref }} =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*)?$ ]]; then
+            is_release=true
+            tag=${GITHUB_REF#refs/tags/}
+            echo "Release tag format is valid: $tag"
+          else
+            is_release=false
+            # 获取最新的发布标签
+            tag=$(curl -sX GET "https://api.github.com/repos/${{ github.repository }}/releases/latest" --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | awk '/tag_name/{print $4}' FS='["]')
+            if [[ ! $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
+              echo "No valid release tag found, using v0.0.0"
+              tag="v0.0.0"
+            fi
+            tag=$(date "+$tag-%y%m%d-$(git rev-parse --short HEAD)")
+          fi
+
+          if ! $($is_release) ; then
+            prefix=${tag%-*-*}
+            suffix=${tag#$prefix-}
+            tag="$prefix-ci.$suffix"
+          fi
+
+          # 检查是否为预发布版本
+          is_prerelease=false
+          if [[ $tag =~ .*alpha.* || $tag =~ .*beta.* || $tag =~ .*rc.* || $tag =~ .*dev.* || $tag =~ .*-ci.* ]]; then
+            is_prerelease=true
+            echo "This is a pre-release version"
+          fi
+
+          echo tag=$tag | tee -a $GITHUB_OUTPUT
+          echo is_release=$is_release | tee -a $GITHUB_OUTPUT
+          echo is_prerelease=$is_prerelease | tee -a $GITHUB_OUTPUT
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # i18n 生成与 LLM 翻译见 .github/workflows/i18n-sync.yml（提交回仓库，避免此处重复翻译）
+      - name: Install PySide6
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install PySide6
+
+      - name: lrelease i18n
+        run: |
+          python ./tools/lrelease.py
+
+      - name: Upload i18n
+        uses: actions/upload-artifact@v7
+        with:
+          name: i18n
+          path: app/i18n
+    outputs:
+      tag: ${{ steps.set_tag.outputs.tag }}
+      is_release: ${{ steps.set_tag.outputs.is_release }}
+      is_prerelease: ${{ steps.set_tag.outputs.is_prerelease }}
+
+
+  nuitka:
+    needs: meta
+    name: nuitka Build (${{ matrix.platform }}-${{ matrix.arch }})
+    runs-on: ${{ matrix.runs-on }}
+    # Nuitka git 标签（与 Nuitka-Action 的 pip git+https 安装一致）；升级时改此处即可
+    env:
+      NUITKA_GIT_REF: "4.0.8"
+    strategy:
+      matrix:
+        include:
+          - platform: win
+            runs-on: windows-latest
+            arch: x86_64
+            python_arch: x64
+            nuitka_main_mode: standalone
+            nuitka_artifact: build/mfw-release
+          - platform: win
+            runs-on: windows-11-arm
+            arch: aarch64
+            python_arch: arm64
+            nuitka_main_mode: standalone
+            nuitka_artifact: build/mfw-release
+          - platform: linux
+            runs-on: ubuntu-latest
+            arch: x86_64
+            python_arch: x64
+            nuitka_main_mode: standalone
+            nuitka_artifact: build/mfw-release
+          - platform: linux
+            runs-on: ubuntu-24.04-arm
+            arch: aarch64
+            python_arch: arm64
+            nuitka_main_mode: standalone
+            nuitka_artifact: build/mfw-release
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          architecture: ${{ matrix.python_arch }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: vcpkg clone & bootstrap (Windows ARM64)
+        if: matrix.platform == 'win' && matrix.arch == 'aarch64'
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/microsoft/vcpkg.git "$env:GITHUB_WORKSPACE\vcpkg"
+          & "$env:GITHUB_WORKSPACE\vcpkg\bootstrap-vcpkg.bat"
+
+      # 缓存 OpenSSL 等二进制与源码包，避免 ARM64 runner 上每次全量编译
+      - name: Cache vcpkg downloads & installed (Windows ARM64)
+        if: matrix.platform == 'win' && matrix.arch == 'aarch64'
+        uses: actions/cache@v5
+        with:
+          path: |
+            vcpkg/downloads
+            vcpkg/installed
+          key: vcpkg-arm64-openssl-static-md-${{ hashFiles('.github/workflows/install.yml') }}
+          restore-keys: |
+            vcpkg-arm64-openssl-static-md-
+
+      - name: vcpkg OpenSSL + pip deps (Windows ARM64)
+        if: matrix.platform == 'win' && matrix.arch == 'aarch64'
+        shell: pwsh
+        run: |
+          & "$env:GITHUB_WORKSPACE\vcpkg\vcpkg.exe" install openssl:arm64-windows-static-md
+
+          $opensslRoot = "$env:GITHUB_WORKSPACE\vcpkg\installed\arm64-windows-static-md"
+          $env:VCPKG_ROOT = "$env:GITHUB_WORKSPACE\vcpkg"
+          $env:OPENSSL_DIR = $opensslRoot
+          $env:OPENSSL_LIB_DIR = "$opensslRoot\lib"
+          $env:OPENSSL_INCLUDE_DIR = "$opensslRoot\include"
+
+          Add-Content -Path $env:GITHUB_ENV -Value "VCPKG_ROOT=$env:VCPKG_ROOT"
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_DIR=$env:OPENSSL_DIR"
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_LIB_DIR=$env:OPENSSL_LIB_DIR"
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_INCLUDE_DIR=$env:OPENSSL_INCLUDE_DIR"
+
+          python -m pip install --upgrade pip
+          python -m pip install setuptools wheel maturin
+          python -m pip install -r requirements.txt
+
+      - name: Install Python dependencies
+        if: ${{ !(matrix.platform == 'win' && matrix.arch == 'aarch64') }}
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Download i18n
+        uses: actions/download-artifact@v8
+        with:
+          name: i18n
+          path: app/i18n
+
+      # 在两次 Nuitka 之前写入版本，主程序与 updater 编译时均能读到 __version__
+      - name: Set __version__ for Nuitka compile
+        env:
+          MFW_VERSION: ${{ needs.meta.outputs.tag }}
+        run: python -c "import os; open('app/common/__version__.py','w',encoding='utf-8').write('__version__ = %r\n' % os.environ['MFW_VERSION'])"
+
+      # Nuitka --file-version / --product-version 仅接受至多 4 段无符号整数（如 1.2.3.0），从 tag 推导
+      - name: Compute executable version metadata
+        id: exe_meta
+        shell: python
+        env:
+          TAG: ${{ needs.meta.outputs.tag }}
+        run: |
+          import os
+          import pathlib
+          import re
+
+          tag = os.environ.get("TAG", "v0.0.0").strip()
+          core = tag[1:] if tag.startswith("v") else tag
+          m = re.match(r"^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:\.(\d+))?", core)
+          parts: list[str] = []
+          if m:
+              for g in m.groups():
+                  if g is not None:
+                      parts.append(g)
+          if not parts:
+              parts = ["0"]
+          while len(parts) < 4:
+              parts.append("0")
+          win_ver = ".".join(parts[:4])
+
+          tl = tag.lower()
+          win_console_mode = (
+              "force" if ("ci" in tl or "alpha" in tl) else "disable"
+          )
+
+          out = pathlib.Path(os.environ["GITHUB_OUTPUT"])
+          with out.open("a", encoding="utf-8") as f:
+              f.write(f"win_file_version={win_ver}\n")
+              f.write(f"win_product_version={win_ver}\n")
+              f.write(f"win_console_mode={win_console_mode}\n")
+
+      - name: Qt GUI with PySide6 (Windows)
+        if: matrix.platform == 'win'
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: ${{ env.NUITKA_GIT_REF }}
+          script-name: main.py
+          mode: ${{ matrix.nuitka_main_mode }}
+          lto: no
+          caching-key: mfw-standalone-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.python_arch }}
+          enable-plugins: pyside6
+          windows-console-mode: ${{ steps.exe_meta.outputs.win_console_mode }}
+          windows-icon-from-ico: ./app/assets/icons/logo.ico
+          company-name: ${{ github.repository_owner }}
+          product-name: MFW-ChainFlow Assistant
+          file-version: ${{ steps.exe_meta.outputs.win_file_version }}
+          product-version: ${{ steps.exe_meta.outputs.win_product_version }}
+          file-description: MaaFramework GUI runner (interface v2)
+          copyright: "Copyright (C) ${{ github.repository_owner }} and contributors. Licensed under GPL-3.0."
+          user-package-configuration-file: nuitka-package.config.yml
+          include-package: |
+            maa
+            PIL
+            MaaAgentBinary
+          include-package-data: MaaAgentBinary
+          include-data-files: |
+            README.md=MFW_README.md
+            README-en.md=MFW_README-en.md
+            LICENSE=MFW_LICENSE
+          include-data-dir: |
+            app/i18n=app/i18n
+            app/assets/icons=app/assets/icons
+
+      - name: Qt GUI with PySide6 (Linux)
+        if: matrix.platform == 'linux'
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: ${{ env.NUITKA_GIT_REF }}
+          script-name: main.py
+          mode: ${{ matrix.nuitka_main_mode }}
+          lto: no
+          caching-key: mfw-standalone-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.python_arch }}
+          enable-plugins: pyside6
+          linux-icon: ./app/assets/icons/logo.png
+          company-name: ${{ github.repository_owner }}
+          product-name: MFW-ChainFlow Assistant
+          file-version: ${{ steps.exe_meta.outputs.win_file_version }}
+          product-version: ${{ steps.exe_meta.outputs.win_product_version }}
+          file-description: MaaFramework GUI runner (interface v2)
+          copyright: "Copyright (C) ${{ github.repository_owner }} and contributors. Licensed under GPL-3.0."
+          user-package-configuration-file: nuitka-package.config.yml
+          include-package: |
+            maa
+            PIL
+            MaaAgentBinary
+          include-package-data: MaaAgentBinary
+          include-data-files: |
+            README.md=MFW_README.md
+            README-en.md=MFW_README-en.md
+            LICENSE=MFW_LICENSE
+          include-data-dir: |
+            app/i18n=app/i18n
+            app/assets/icons=app/assets/icons
+
+      - name: updater build (Windows)
+        if: matrix.platform == 'win'
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: ${{ env.NUITKA_GIT_REF }}
+          script-name: updater.py
+          mode: onefile
+          lto: no
+          caching-key: mfw-onefile-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.python_arch }}
+          output-file: MFWUpdater
+          windows-console-mode: force
+          company-name: ${{ github.repository_owner }}
+          product-name: MFW Updater
+          file-version: ${{ steps.exe_meta.outputs.win_file_version }}
+          product-version: ${{ steps.exe_meta.outputs.win_product_version }}
+          file-description: MFW update helper (sidecar)
+          copyright: "Copyright (C) ${{ github.repository_owner }} and contributors. Licensed under GPL-3.0."
+
+      - name: updater build (Linux)
+        if: matrix.platform == 'linux'
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: ${{ env.NUITKA_GIT_REF }}
+          script-name: updater.py
+          mode: onefile
+          lto: no
+          caching-key: mfw-onefile-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.python_arch }}
+          output-file: MFWUpdater
+          company-name: ${{ github.repository_owner }}
+          product-name: MFW Updater
+          file-version: ${{ steps.exe_meta.outputs.win_file_version }}
+          product-version: ${{ steps.exe_meta.outputs.win_product_version }}
+          file-description: MFW update helper (sidecar)
+          copyright: "Copyright (C) ${{ github.repository_owner }} and contributors. Licensed under GPL-3.0."
+
+      # standalone：main.dist 内为 maa/bin；迁入 mfw-release 后执行 move_maa_bin_to_maafw，与 MAAFW_BINARY_PATH=maafw 一致
+      - name: Assemble mfw-release (Windows)
+        if: matrix.platform == 'win'
+        shell: pwsh
+        run: |
+          $rel = Join-Path "build" "mfw-release"
+          $srcDist = Join-Path "build" "main.dist"
+          $updExe = Join-Path "build" "MFWUpdater.exe"
+          $mainBuilt = Join-Path $srcDist "main.exe"
+          if (-not (Test-Path -LiteralPath $srcDist -PathType Container)) { Write-Error "missing $srcDist"; Get-ChildItem -LiteralPath build; exit 1 }
+          if (-not (Test-Path -LiteralPath $mainBuilt -PathType Leaf)) { Write-Error "missing $mainBuilt"; Get-ChildItem -LiteralPath $srcDist; exit 1 }
+          if (-not (Test-Path -LiteralPath $updExe -PathType Leaf)) { Write-Error "missing $updExe"; Get-ChildItem -LiteralPath build; exit 1 }
+          New-Item -ItemType Directory -Force $rel | Out-Null
+          Copy-Item -Path (Join-Path $srcDist '*') -Destination $rel -Recurse -Force
+          Rename-Item -LiteralPath (Join-Path $rel "main.exe") -NewName "MFW.exe" -Force
+          Move-Item -LiteralPath $updExe -Destination (Join-Path $rel "MFWUpdater.exe") -Force
+          python tools/move_maa_bin_to_maafw.py $rel
+
+      - name: Assemble mfw-release (Linux)
+        if: matrix.platform == 'linux'
+        shell: bash
+        env:
+          MFW_VERSION: ${{ needs.meta.outputs.tag }}
+          MFW_WIN_VER: ${{ steps.exe_meta.outputs.win_file_version }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          rel="build/mfw-release"
+          src_dist="build/main.dist"
+          upd_bin="build/MFWUpdater"
+          if [[ ! -d "$src_dist" ]]; then echo "missing $src_dist"; ls -la build; exit 1; fi
+          if [[ ! -f "$upd_bin" ]]; then echo "missing $upd_bin"; ls -la build; exit 1; fi
+          mkdir -p "$rel"
+          cp -a "$src_dist"/. "$rel"/
+          if [[ -f "$rel/main" ]]; then
+            mv -f "$rel/main" "$rel/MFW"
+          elif [[ -f "$rel/main.bin" ]]; then
+            mv -f "$rel/main.bin" "$rel/MFW"
+          else
+            echo "missing main or main.bin in $rel"; ls -la "$rel"; exit 1
+          fi
+          mv "$upd_bin" "$rel/MFWUpdater"
+          chmod +x "$rel/MFW" "$rel/MFWUpdater"
+          python3 tools/move_maa_bin_to_maafw.py "$rel"
+
+          python3 << 'PY'
+          import datetime as _dt
+          import os
+          import pathlib
+          import xml.sax.saxutils as _xml
+
+          main = pathlib.Path("build/mfw-release")
+          tag_plain = os.environ.get("MFW_VERSION", "")
+          tag_xml = _xml.escape(tag_plain)
+          win_ver_plain = os.environ.get("MFW_WIN_VER", "0.0.0.0")
+          win_ver_xml = _xml.escape(win_ver_plain)
+          owner = _xml.escape(os.environ.get("GITHUB_REPOSITORY_OWNER", ""))
+          repo = os.environ.get("GITHUB_REPOSITORY", "")
+          home = _xml.escape(f"https://github.com/{repo}")
+
+          launcher = """#!/usr/bin/env sh
+          HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+          cd "$HERE" || exit 1
+          exec ./MFW "$@"
+          """
+          (main / "run-mfw.sh").write_text(
+              "\n".join(line.lstrip() for line in launcher.strip().splitlines()) + "\n",
+              encoding="utf-8",
+          )
+          (main / "run-mfw.sh").chmod(0o755)
+
+          desktop = f"""[Desktop Entry]
+          Version=1.5
+          Type=Application
+          Terminal=false
+          Categories=Utility;Development;
+          StartupWMClass=MFW
+          Name=MFW-ChainFlow Assistant
+          Name[zh_CN]=链程助手
+          GenericName=MaaFramework GUI
+          Comment=Visual runner for MaaFramework automation (interface v2). Build tag: {tag_plain}
+          Comment[zh_CN]=基于 MaaFramework 的可视化自动化运行器（interface v2）。构建标识：{tag_plain}
+          Keywords=maa;MaaFramework;automation;PySide6;
+          Icon=app/assets/icons/logo.png
+          Exec=./run-mfw.sh
+          """
+          (main / "io.github.overflow65537.mfw-pyqt6.desktop").write_text(
+              "\n".join(line.lstrip() for line in desktop.strip().splitlines()) + "\n",
+              encoding="utf-8",
+          )
+
+          today = _dt.datetime.now(_dt.UTC).date().isoformat()
+          metainfo_dir = main / "share" / "metainfo"
+          metainfo_dir.mkdir(parents=True, exist_ok=True)
+          xml_body = f"""<?xml version="1.0" encoding="UTF-8"?>
+          <component type="desktop-application">
+            <id>io.github.overflow65537.mfw-pyqt6</id>
+            <metadata_license>MIT</metadata_license>
+            <project_license>GPL-3.0-or-later</project_license>
+            <name>MFW-ChainFlow Assistant</name>
+            <name xml:lang="zh_CN">链程助手</name>
+            <summary>Visual runner for MaaFramework automation (interface v2)</summary>
+            <summary xml:lang="zh_CN">基于 MaaFramework 的可视化自动化运行器（interface v2）</summary>
+            <developer_name>{owner}</developer_name>
+            <url type="homepage">{home}</url>
+            <url type="bugtracker">{home}/issues</url>
+            <launchable type="desktop-id">io.github.overflow65537.mfw-pyqt6.desktop</launchable>
+            <releases>
+              <release version="{win_ver_xml}" date="{_xml.escape(today)}">
+                <description>
+                  <p>Build tag: {tag_xml}</p>
+                </description>
+              </release>
+            </releases>
+          </component>
+          """
+          (metainfo_dir / "io.github.overflow65537.mfw-pyqt6.metainfo.xml").write_text(
+              "\n".join(line.lstrip() for line in xml_body.strip().splitlines()) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Generate distribution file list
+        run: python tools/build_nuitka.py --file-list
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: MFW-PyQt6-${{ matrix.platform }}-${{ matrix.arch }}
+          path: ${{ matrix.nuitka_artifact }}
+          include-hidden-files: true
+
+  # === PyInstaller：仅 macOS（Windows / Linux 由 nuitka job 打包）===
+  pyinstaller:
+    needs: meta
+    name: Build (${{ matrix.platform }}-${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-15-intel
+            platform: macos
+            arch: x86_64 
+            target_arch: x86_64
+            python_arch: x64
+
+          - os: macos-latest
+            platform: macos
+            arch: aarch64  
+            target_arch: arm64
+            python_arch: arm64
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+ 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          architecture: ${{ matrix.python_arch }}
+
+      - name: Install dependencies (Windows ARM64)
+        if: matrix.platform == 'win' && matrix.arch == 'aarch64'
+        run: |
+          # 安装 vcpkg 并获取 OpenSSL（cryptography 依赖）
+          git clone https://github.com/microsoft/vcpkg.git ${{ github.workspace }}\vcpkg
+          ${{ github.workspace }}\vcpkg\bootstrap-vcpkg.bat
+          ${{ github.workspace }}\vcpkg\vcpkg install openssl:arm64-windows-static-md
+
+          $env:VCPKG_ROOT = "${{ github.workspace }}\vcpkg"
+          $env:OPENSSL_DIR = "${{ github.workspace }}\vcpkg\installed\arm64-windows-static-md"  # 告知 cryptography 依赖位置
+          $env:OPENSSL_LIB_DIR = "$env:OPENSSL_DIR\lib"
+          $env:OPENSSL_INCLUDE_DIR = "$env:OPENSSL_DIR\include"
+
+          # 升级 pip 并安装基础工具
+          python -m pip install --upgrade pip
+          python -m pip install setuptools wheel maturin  # maturin 用于 Rust-Python 混合编译
+
+          # 安装其他依赖
+          python -m pip install pyinstaller
+          python -m pip install -r ./requirements.txt
+        shell: pwsh
+
+      - name: Install dependencies (macos)
+        if: matrix.platform == 'macos'
+        run: |
+          uname -m
+          if [[ ${{ matrix.arch }} == "x86_64" ]]; then
+            arch -x86_64 python -m pip install --force-reinstall --no-cache-dir pyinstaller -r requirements.txt
+          elif [[ ${{ matrix.arch }} == "aarch64" ]]; then
+            arch -arm64 python -m pip install --force-reinstall --no-cache-dir pyinstaller -r requirements.txt
+          fi
+
+      - name: Install dependencies (other)
+        if: matrix.platform != 'macos' && !(matrix.platform == 'win' && matrix.arch == 'aarch64')
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyinstaller
+          python -m pip install -r ./requirements.txt
+
+      - name: Download i18n
+        uses: actions/download-artifact@v8
+        with:
+          name: i18n
+          path: app/i18n
+
+      - name: Install(macos)
+        if: matrix.platform == 'macos'
+        run: |
+          sudo python ./tools/build.py ${{ matrix.platform }} ${{ matrix.arch }} ${{ needs.meta.outputs.tag }}
+
+
+      - name: Install(other)
+        if: matrix.platform != 'macos'
+        run: |
+          python ./tools/build.py ${{ matrix.platform }} ${{ matrix.arch }} ${{ needs.meta.outputs.tag }}
+        shell: pwsh  
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: MFW-PyQt6-${{ matrix.platform }}-${{ matrix.arch }}
+          path: "dist/MFW/"
+
+
+  # === 以下 release 与 main/.github/workflows/install.yml 一致；needs 含 nuitka（Win/Linux）与 pyinstaller（macOS）===
+  release:
+    if: ${{ needs.meta.outputs.is_release == 'true' }}
+    needs: [meta, nuitka, pyinstaller, changelog]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: assets
+
+      - run: |
+          cd assets
+          for f in *; do
+            if [ "$f" != "i18n" ]; then
+              (cd $f && zip -r ../$f-${{ needs.meta.outputs.tag }}.zip .)
+            fi
+          done
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: assets/*.zip
+          tag_name: ${{ needs.meta.outputs.tag }}
+          body: ${{ needs.changelog.outputs.release_body }}
+          draft: false
+          prerelease: ${{ needs.meta.outputs.is_prerelease }}
+
+      - name: Trigger MirrorChyanUploading
+        if: github.repository_owner == 'overflow65537'
+        run: |
+          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan
+          gh workflow run --repo $GITHUB_REPOSITORY mirrorchyan_release_note
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
