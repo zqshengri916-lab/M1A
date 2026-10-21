@@ -1,0 +1,192 @@
+{
+    "wb_上滑": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    128,
+                    17,
+                    106,
+                    40
+                ],
+                "expected": [
+                    "世界地图"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    140,
+                    517,
+                    1,
+                    1
+                ],
+                "end": [
+                    [
+                        134,
+                        423,
+                        0,
+                        2
+                    ]
+                ],
+                "duration": [
+                    500
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "attach": {
+            "note": "占位：begin/end 坐标按 boss 列表区域调整；lv70 及以上的 option 会把 世界地图.next 指到本节点"
+        },
+        "next": [
+            "wb_选择boss"
+        ]
+    },
+    "wb_选择boss": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    0,
+                    0,
+                    1280,
+                    720
+                ],
+                "template": [
+                    "operator/boss/boss_1_part.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "attach": {
+            "note": "占位：roi 可收紧到 boss 列表区域；option world_boss_select 会按所选 boss 覆盖 template"
+        },
+        "next": [
+            "wb_点击战斗"
+        ]
+    },
+    "世界地图": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1186,
+                    54,
+                    86,
+                    59
+                ],
+                "template": [
+                    "operator/world.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "next": [
+            "wb_选择boss"
+        ]
+    },
+    "进入大世界 ": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    25,
+                    113,
+                    213,
+                    452
+                ],
+                "expected": [
+                    "大世界"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "next": [
+            "世界地图"
+        ]
+    },
+    "wb_点击战斗": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "operator/boss/战斗.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "选择队伍"
+        ]
+    },
+    "选择队伍": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "operator/boss/选择队伍.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1186,
+                    230,
+                    57,
+                    61
+                ]
+            }
+        }
+    }
+}

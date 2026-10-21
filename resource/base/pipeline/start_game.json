@@ -1,0 +1,26 @@
+{
+    "开始游戏": {
+        "recognition": {
+            "type": "Custom",
+            "param": {
+                "custom_recognition": ""
+            }
+        },
+        "action": {
+            "type": "StartApp",
+            "param": {
+                "package": "com.fyf.newslggf"
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

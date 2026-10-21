@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "summon",
+            "label": "召唤",
+            "entry": "返回主界面",
+            "description": "完成英雄、圣物与魔法使召唤",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "召唤？"
+                    ]
+                }
+            }
+        }
+    ]
+}

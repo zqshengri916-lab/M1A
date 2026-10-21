@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "seven_day_deals",
+            "label": "七日特惠",
+            "entry": "返回主界面",
+            "description": "完成七日特惠签到",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "七日特惠"
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,101 @@
+{
+    "爱心便当": {
+        "$__mpe_code": {
+            "position": {
+                "x": 387,
+                "y": 269
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "领取1"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "爱心便当"
+                ],
+                "roi": [
+                    7,
+                    75,
+                    198,
+                    517
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "领取1": {
+        "$__mpe_code": {
+            "position": {
+                "x": 705,
+                "y": 269
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    986,
+                    360,
+                    141,
+                    30
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "领取2"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "领取2": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1003,
+                "y": 286
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    1016,
+                    611,
+                    78,
+                    27
+                ]
+            },
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

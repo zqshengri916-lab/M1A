@@ -1,0 +1,234 @@
+{
+    "一键种植": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1065,
+                    509,
+                    101,
+                    32
+                ],
+                "expected": [
+                    "一键种植"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "选择24h"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "收获": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    770,
+                    92,
+                    365,
+                    252
+                ],
+                "template": [
+                    "operator/庄园_收取.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "repeat": 2,
+        "next": [
+            "[JumpBack]种植"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "确认种植": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1190,
+                    573,
+                    1,
+                    1
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "种植": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    983,
+                    262,
+                    100,
+                    101
+                ],
+                "template": [
+                    "operator/庄园_种植.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "一键种植"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入庄园": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    832,
+                    339,
+                    38,
+                    43
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    797,
+                    373,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "收获"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入角色界面": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    661,
+                    73,
+                    52,
+                    29
+                ],
+                "expected": [
+                    "布局"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    79,
+                    52,
+                    29,
+                    30
+                ]
+            }
+        },
+        "next": [
+            "进入庄园"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择24h": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1186,
+                    461,
+                    30,
+                    25
+                ],
+                "expected": [
+                    "24"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "确认种植"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

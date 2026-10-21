@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "manor",
+            "label": "庄园",
+            "entry": "返回主界面",
+            "description": "收取庄园作物并一键种植",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入角色界面"
+                    ]
+                }
+            }
+        }
+    ]
+}

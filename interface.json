@@ -1,0 +1,73 @@
+{
+    "interface_version": 2,
+    "name": "M1A",
+    "description": "这是一个基于 MaaFramework 的项目，用于异世界的城主大人的自动化项目。",
+    "license": "MIT",
+    "title": "M1A",
+    "welcome": "asserts/welcome.md",
+    "github": "https://github.com/zqshengri916-lab/M1A",
+    "mirrorchyan_rid": "M1A",
+    "mirrorchyan_multiplatform": true,
+    "version": "0.1.0",
+    "controller": [
+        {
+            "name": "ADB",
+            "label": "Adb控制器",
+            "type": "Adb"
+        }
+    ],
+    "resource": [
+        {
+            "name": "官服",
+            "path": [
+                "./resource/base"
+            ],
+            "controller": [
+                "ADB"
+            ]
+        }
+    ],
+    "agent": {
+        "child_exec": ".venv/Scripts/python.exe",
+        "child_args": [
+            "./agent/main.py"
+        ]
+    },
+    "group": [
+        {
+            "name": "daily",
+            "label": "日常任务",
+            "default_expand": false
+        },
+        {
+            "name": "weekly",
+            "label": "周常任务",
+            "default_expand": false
+        }
+    ],
+    "import": [
+        "tasks/abyss.json",
+        "tasks/alliance.json",
+        "tasks/answer_question.json",
+        "tasks/arena.json",
+        "tasks/claim_stamina.json",
+        "tasks/close_game.json",
+        "tasks/daily_claim_all.json",
+        "tasks/feast.json",
+        "tasks/limited_reward.json",
+        "tasks/magic_garden.json",
+        "tasks/manor.json",
+        "tasks/memory_space.json",
+        "tasks/preset/daily.json",
+        "tasks/ruins.json",
+        "tasks/seven_day_deals.json",
+        "tasks/solo_boss.json",
+        "tasks/specialty.json",
+        "tasks/start_game.json",
+        "tasks/summon.json",
+        "tasks/tap_checkin.json",
+        "tasks/treasure_cave.json",
+        "tasks/wasteland.json",
+        "tasks/world_boss.json"
+    ]
+}

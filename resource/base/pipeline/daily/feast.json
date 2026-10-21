@@ -1,0 +1,64 @@
+{
+    "点击盛宴": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    58,
+                    626,
+                    108,
+                    40
+                ],
+                "expected": [
+                    "一键领取"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    69,
+                    634,
+                    100,
+                    22
+                ]
+            }
+        },
+        "next": [
+            "返回"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "返回": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    61,
+                    48
+                ]
+            }
+        },
+        "anchor": "返回",
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

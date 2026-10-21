@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "feast",
+            "label": "盛宴",
+            "entry": "返回主界面",
+            "description": "领取盛宴奖励",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "点击盛宴"
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "尝试领取": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    911,
+                    155,
+                    316,
+                    95
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1149,
+                    186,
+                    41,
+                    40
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择N领取界面": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    925,
+                    593,
+                    301,
+                    67
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -36,
+                    16,
+                    8,
+                    5
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "限时回馈": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    12,
+                    84,
+                    195,
+                    507
+                ],
+                "expected": [
+                    "限时回馈"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]尝试领取",
+            "选择N领取界面"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

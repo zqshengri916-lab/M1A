@@ -1,0 +1,342 @@
+{
+    "$__mpe_config_memory_space": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "memory_space",
+            "prefix": "",
+            "savedViewport": {
+                "x": -1879,
+                "y": -152,
+                "zoom": 0.68
+            },
+            "version": "v2.1.0"
+        }
+    },
+    "jykj_结束": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4457,
+                "y": 933
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    60,
+                    27,
+                    43,
+                    19
+                ]
+            },
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "inverse": true,
+        "recognition": {
+            "param": {
+                "roi": [
+                    1219,
+                    4,
+                    45,
+                    32
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        }
+    },
+    "jykj_跳过": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4165,
+                "y": 671
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    1187,
+                    19,
+                    39,
+                    18
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]剧情",
+            "jykj_结束",
+            "选择关卡"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    1187,
+                    46,
+                    42,
+                    25
+                ]
+            },
+            "type": "DirectHit"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "jykj_进入冒险": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2740,
+                "y": 418
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "有次数消耗"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "冒险"
+                ],
+                "roi": [
+                    1103,
+                    672,
+                    44,
+                    30
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "剧情": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4458,
+                "y": 585
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    800,
+                    346,
+                    225,
+                    140
+                ]
+            },
+            "type": "Click"
+        },
+        "recognition": {
+            "param": {
+                "roi": [
+                    1186,
+                    19,
+                    62,
+                    60
+                ],
+                "template": [
+                    "operator/diarecord.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "repeat": 10,
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "战斗": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3904,
+                "y": 623
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    984,
+                    558,
+                    172,
+                    38
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "jykj_跳过"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "有次数消耗": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3048,
+                "y": 430
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    110,
+                    370,
+                    54,
+                    49
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "选择关卡"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    173,
+                    303,
+                    47,
+                    42
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择关卡": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3330,
+                "y": 510
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "选择难度"
+        ],
+        "recognition": {
+            "param": {
+                "template": [
+                    "operator/award/gift.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择难度": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3601,
+                "y": 576
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    948,
+                    430,
+                    87,
+                    19
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "战斗"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "模拟战斗"
+                ],
+                "roi": [
+                    1019,
+                    491,
+                    101,
+                    38
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

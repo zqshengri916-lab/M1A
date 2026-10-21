@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "arena",
+            "label": "竞技场",
+            "entry": "返回主界面",
+            "description": "进入荣耀竞技场并选择战斗对象",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入竞技场"
+                    ]
+                }
+            }
+        }
+    ]
+}

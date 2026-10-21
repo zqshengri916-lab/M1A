@@ -1,0 +1,390 @@
+{
+    "eg_关闭奖励": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    297,
+                    373,
+                    649,
+                    346
+                ],
+                "expected": [
+                    "点击任意空白处关闭"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "返回市政厅"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "主界面？": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "operator/award/铁.png"
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "关闭公告": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    147,
+                    128,
+                    141,
+                    63
+                ],
+                "expected": [
+                    "游戏公告"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1090,
+                    151,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "进入游戏"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "市政奖励": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -34,
+                    12,
+                    28,
+                    7
+                ]
+            }
+        },
+        "next": [
+            "eg_关闭奖励"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "打开游戏": {
+        "action": {
+            "type": "StartApp",
+            "param": {
+                "package": "com.fyf.newslggf"
+            }
+        },
+        "post_delay": 15000,
+        "next": [
+            "[JumpBack]更新",
+            "点击空白"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "更新": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    389,
+                    301,
+                    325,
+                    35
+                ],
+                "expected": [
+                    "检测到有新的资源需要更新下载"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    454,
+                    487,
+                    94,
+                    25
+                ]
+            }
+        },
+        "post_delay": 3000,
+        "next": [
+            "点击空白"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "点击空白": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    532,
+                    638,
+                    222,
+                    46
+                ],
+                "expected": [
+                    "点击任意空白处关闭"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    510,
+                    626,
+                    273,
+                    75
+                ]
+            }
+        },
+        "next": [
+            "关闭公告",
+            "进入游戏"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "返回市政厅": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    48,
+                    51,
+                    1,
+                    1
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入游戏": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    581,
+                    596,
+                    109,
+                    41
+                ],
+                "expected": [
+                    "进入游戏"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "选定角色"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选定角色": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    123,
+                    22,
+                    113,
+                    33
+                ],
+                "expected": [
+                    "角色列表"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    123,
+                    244,
+                    141,
+                    152
+                ]
+            }
+        },
+        "post_delay": 3500,
+        "next": [
+            "[JumpBack]领取收益",
+            "关闭弹窗",
+            "主界面？"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "领取收益": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    112,
+                    32,
+                    133,
+                    32
+                ],
+                "expected": [
+                    "市政办公室"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1082,
+                    652,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]市政奖励",
+            "返回市政厅"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "关闭弹窗": {
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "关闭弹窗"
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

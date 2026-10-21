@@ -1,0 +1,166 @@
+{
+    "$__mpe_config_treasure_cave": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "treasure_cave",
+            "prefix": "",
+            "savedViewport": {
+                "x": -2780,
+                "y": -177,
+                "zoom": 1.14
+            },
+            "version": "v2.1.0"
+        }
+    },
+    "cbd_进入冒险": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2639,
+                "y": 441
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "[JumpBack]进入藏宝洞"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "冒险"
+                ],
+                "roi": [
+                    1103,
+                    672,
+                    44,
+                    30
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    },
+    "开启": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3190,
+                "y": 443
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "拾取"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    795,
+                    591,
+                    52,
+                    59
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    },
+    "拾取": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3480,
+                "y": 471
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "recognition": {
+            "param": {
+                "template": [
+                    "operator/pickbox.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    },
+    "进入藏宝洞": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2913,
+                "y": 439
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    413,
+                    111,
+                    65,
+                    46
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "开启"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    460,
+                    67,
+                    34,
+                    41
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    }
+}

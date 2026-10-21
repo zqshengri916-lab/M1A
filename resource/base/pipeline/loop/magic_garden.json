@@ -1,0 +1,193 @@
+{
+    "$__mpe_config_magic_garden": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "magic_garden",
+            "prefix": "",
+            "savedViewport": {
+                "x": -2669,
+                "y": -162,
+                "zoom": 0.82
+            },
+            "version": "v2.1.0"
+        }
+    },
+    "mfy_入口": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3660,
+                "y": 591
+            }
+        },
+        "next": [
+            "[JumpBack]选择"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "mfy_战斗": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4562,
+                "y": 703
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    1190,
+                    19,
+                    40,
+                    20
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "mfy_跳过"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "跳过"
+                ],
+                "roi": [
+                    1188,
+                    43,
+                    44,
+                    27
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "mfy_跳过": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4839,
+                "y": 779
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "recognition": {
+            "param": {
+                "expected": [
+                    "点击任意空白处关闭"
+                ],
+                "roi": [
+                    723,
+                    651,
+                    213,
+                    41
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "mfy_进入战斗": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4255,
+                "y": 652
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "mfy_战斗"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "战斗"
+                ],
+                "roi": [
+                    889,
+                    569,
+                    55,
+                    29
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3980,
+                "y": 597
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "mfy_进入战斗"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "挑战"
+                ],
+                "roi": [
+                    1052,
+                    167,
+                    55,
+                    32
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "task": [
+        {
+            "name": "return_main",
+            "label": "返回主界面",
+            "description": "识别当前界面并有限次返回，不启动游戏。",
+            "fields": [
+                {"name": "max_attempts", "type": "number", "label": "最多尝试次数", "default": 8, "min": 1, "max": 30}
+            ],
+            "steps": [
+                {"procedure": "game.return_main", "args": {"max_attempts": {"$ref": "inputs.max_attempts"}}, "save_as": "navigation"}
+            ]
+        },
+        {
+            "name": "record_awards",
+            "label": "记录物品增量",
+            "description": "在当前物品/奖励界面执行。需要提供物品模板，未识别的数量不会按 0 覆盖。",
+            "fields": [
+                {"name": "roi", "type": "input", "label": "ROI（JSON 数组 [x,y,w,h]，null 为全屏）", "default": "null"},
+                {"name": "direction", "type": "selectbox", "label": "滚动方向", "default": "left",
+                 "choices": [{"value": "left", "label": "向左"}, {"value": "up", "label": "向上"}]},
+                {"name": "max_swipes", "type": "number", "label": "最多滑动次数", "default": 3, "min": 0, "max": 10}
+            ],
+            "steps": [
+                {
+                    "procedure": "game.record_awards",
+                    "args": {"roi": {"$ref": "inputs.roi"}, "scroll_direction": {"$ref": "inputs.direction"}, "max_swipes": {"$ref": "inputs.max_swipes"}},
+                    "save_as": "inventory"
+                }
+            ]
+        }
+    ]
+}

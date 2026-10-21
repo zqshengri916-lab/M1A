@@ -1,0 +1,113 @@
+{
+    "七日特惠": {
+        "$__mpe_code": {
+            "position": {
+                "x": -224,
+                "y": -20
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "领取"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "七日特惠签到"
+                ],
+                "roi": [
+                    12,
+                    84,
+                    195,
+                    507
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "完成领取界面": {
+        "$__mpe_code": {
+            "position": {
+                "x": 415,
+                "y": 23
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    1073,
+                    573
+                ]
+            },
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "领取": {
+        "$__mpe_code": {
+            "position": {
+                "x": 104,
+                "y": -20
+            }
+        },
+        "action": {
+            "param": {
+                "target_offset": [
+                    -56,
+                    27,
+                    21,
+                    17
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "完成领取界面"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    586,
+                    238,
+                    693,
+                    438
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

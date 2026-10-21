@@ -1,0 +1,234 @@
+{
+    "pb_上滑": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    123,
+                    21,
+                    101,
+                    32
+                ],
+                "expected": [
+                    "世界首领"
+                ]
+            }
+        },
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    207,
+                    688,
+                    1,
+                    1
+                ],
+                "end": [
+                    [
+                        220,
+                        446,
+                        1,
+                        1
+                    ]
+                ],
+                "duration": [
+                    500
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "attach": {
+            "note": "占位：begin/end 坐标按 boss 列表区域调整；lv70 及以上的 option 会把 世界地图.next 指到本节点"
+        },
+        "next": [
+            "pb_选择boss"
+        ]
+    },
+    "pb_进入冒险": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    25,
+                    113,
+                    213,
+                    452
+                ],
+                "expected": [
+                    "大世界"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "next": [
+            "pb_进入首领"
+        ]
+    },
+    "pb_进入首领": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1070,
+                    458,
+                    41,
+                    38
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1005,
+                    527,
+                    79,
+                    51
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "next": [
+            "选择个人"
+        ]
+    },
+    "pb_选择boss": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    50,
+                    141,
+                    324,
+                    557
+                ],
+                "template": [
+                    "operator/boss/boss_1_part.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        },
+        "attach": {
+            "note": "占位：roi 可收紧到 boss 列表区域；option world_boss_select 会按所选 boss 覆盖 template"
+        },
+        "next": [
+            "pb_扫荡"
+        ]
+    },
+    "选择个人": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    261,
+                    89,
+                    54,
+                    38
+                ],
+                "expected": [
+                    "个人"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "pb_选择boss"
+        ]
+    },
+    "pb_扫荡": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    938,
+                    479,
+                    65,
+                    40
+                ],
+                "expected": [
+                    "扫荡"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "pb_确认"
+        ]
+    },
+    "pb_确认": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    598,
+                    134,
+                    88,
+                    37
+                ],
+                "expected": [
+                    "提示"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    745,
+                    493,
+                    81,
+                    33
+                ]
+            }
+        }
+    }
+}

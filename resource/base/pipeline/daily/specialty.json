@@ -1,0 +1,146 @@
+{
+    "SPE_进入冒险": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1099,
+                    670,
+                    47,
+                    29
+                ],
+                "expected": [
+                    "冒险"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "点击运输"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "关闭运输界面": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    45,
+                    30,
+                    27,
+                    23
+                ]
+            }
+        },
+        "next": [
+            "SP_建立监听"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "开始运输": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    320,
+                    645,
+                    75,
+                    41
+                ],
+                "expected": [
+                    "开始"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "关闭运输界面"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "点击运输": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    161,
+                    228,
+                    101,
+                    41
+                ],
+                "expected": [
+                    "特产运输"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "开始运输"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "SP_建立监听": {
+        "recognition": {
+            "type": "Custom",
+            "param": {
+                "custom_recognition": "识别监听",
+                "custom_recognition_param": "{\"expected\":“结算”}"
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

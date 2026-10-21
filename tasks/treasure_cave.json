@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "treasure_cave",
+            "label": "藏宝洞",
+            "entry": "返回主界面",
+            "description": "进入藏宝洞并开启宝箱、拾取奖励",
+            "group": [
+                "weekly"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "cbd_进入冒险"
+                    ]
+                }
+            }
+        }
+    ]
+}

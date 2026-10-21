@@ -1,0 +1,423 @@
+{
+    "一键放入": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1008,
+                    427,
+                    108,
+                    35
+                ],
+                "expected": [
+                    "一键放入"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "转化"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "位置溢出": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    469,
+                    6,
+                    312,
+                    155
+                ],
+                "expected": [
+                    "英雄卡组超出最大数量"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1006,
+                    33,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "一键放入"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "召唤": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    481,
+                    582,
+                    67,
+                    32
+                ],
+                "expected": [
+                    "免费"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "抽卡成功"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "召唤？": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    791,
+                    669,
+                    51,
+                    36
+                ],
+                "expected": [
+                    "召唤"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    762,
+                    682,
+                    1,
+                    1
+                ]
+            }
+        },
+        "timeout": 10000,
+        "next": [
+            "[JumpBack]位置溢出",
+            "[JumpBack]英雄召唤",
+            "[JumpBack]圣物召唤",
+            "魔法使"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "圣物召唤": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    202,
+                    312,
+                    44,
+                    35
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    161,
+                    362,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "是否跳过"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "抽卡成功": {
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    677,
+                    641,
+                    346,
+                    24
+                ],
+                "lower": [
+                    [
+                        36,
+                        45,
+                        64
+                    ]
+                ],
+                "upper": [
+                    [
+                        58,
+                        65,
+                        88
+                    ]
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    872,
+                    615,
+                    149,
+                    76
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "是否跳过": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1035,
+                    520,
+                    41,
+                    41
+                ],
+                "template": [
+                    "operator/召唤.png"
+                ]
+            }
+        },
+        "next": [
+            "召唤"
+        ],
+        "on_error": [
+            "[JumpBack]选择跳过"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "英雄召唤": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    202,
+                    160,
+                    46,
+                    49
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    118,
+                    205,
+                    98,
+                    21
+                ]
+            }
+        },
+        "next": [
+            "是否跳过"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "转化": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1068,
+                    330,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "退出"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "退出": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    67,
+                    38,
+                    1,
+                    1
+                ]
+            }
+        },
+        "repeat": 2,
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "选择跳过": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    1054,
+                    544,
+                    1,
+                    1
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "魔法使": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    205,
+                    447,
+                    36,
+                    51
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    161,
+                    498,
+                    1,
+                    1
+                ]
+            }
+        },
+        "next": [
+            "是否跳过"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

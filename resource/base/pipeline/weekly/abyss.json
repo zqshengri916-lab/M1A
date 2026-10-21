@@ -1,0 +1,134 @@
+{
+    "$__mpe_config_abyss": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "abyss",
+            "prefix": "",
+            "savedViewport": {
+                "x": -2045,
+                "y": -103,
+                "zoom": 0.68
+            },
+            "version": "v2.1.0"
+        }
+    },
+    "sy_进入冒险": {
+        "$__mpe_code": {
+            "position": {
+                "x": 3710,
+                "y": 589
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "进入深渊"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "冒险"
+                ],
+                "roi": [
+                    1102,
+                    670,
+                    46,
+                    29
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    },
+    "扫荡": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4464,
+                "y": 706
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "recognition": {
+            "param": {
+                "expected": [
+                    "一键扫荡"
+                ],
+                "roi": [
+                    926,
+                    68,
+                    118,
+                    50
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    },
+    "进入深渊": {
+        "$__mpe_code": {
+            "position": {
+                "x": 4107,
+                "y": 648
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    975,
+                    284,
+                    68,
+                    78
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "扫荡"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    1022,
+                    224,
+                    98,
+                    81
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "modal"
+                ]
+            }
+        }
+    }
+}

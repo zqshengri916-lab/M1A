@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "limited_reward",
+            "label": "限时回馈",
+            "entry": "返回主界面",
+            "description": "领取限时回馈奖励",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "限时回馈"
+                    ]
+                }
+            }
+        }
+    ]
+}

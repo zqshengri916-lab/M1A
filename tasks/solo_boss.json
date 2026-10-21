@@ -1,0 +1,174 @@
+{
+    "option": {
+        "solo_boss_select": {
+            "type": "select",
+            "label": "选择个人Boss",
+            "description": "按图像识别选择个人Boss（模板图：operator/boss/boss_N_part.png）",
+            "default_case": "lv30 铁甲将军",
+            "cases": [
+                {
+                    "name": "lv30 铁甲将军",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_1_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv40 摩因",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_2_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv50 库里雷蒙",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_3_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv55 赤达鲁",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_4_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv60 莫里卡特",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_5_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv65 杜丽莎",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_6_part.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "lv70 克拉肯",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_7_part.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "选择个人": {
+                            "next": [
+                                "pb_上滑"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "lv75 贝塞德",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_8_part.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "选择个人": {
+                            "next": [
+                                "pb_上滑"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "lv80 卡塔",
+                    "pipeline_override": {
+                        "pb_选择boss": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "operator/boss/boss_9_part.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "选择个人": {
+                            "next": [
+                                "pb_上滑"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "task": [
+        {
+            "name": "solo_boss",
+            "label": "个人Boss",
+            "entry": "返回主界面",
+            "description": "进入世界首领界面并挑战选定的个人Boss",
+            "group": [
+                "daily"
+            ],
+            "option": [
+                "solo_boss_select"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "新建节点28"
+                    ]
+                }
+            }
+        }
+    ]
+}

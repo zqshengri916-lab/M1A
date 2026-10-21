@@ -1,0 +1,197 @@
+{
+    "AQ_进入冒险": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    1103,
+                    672,
+                    44,
+                    27
+                ],
+                "expected": [
+                    "冒险"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "进入广场"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "下一题": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    589,
+                    601,
+                    99,
+                    50
+                ],
+                "expected": [
+                    "下一题"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "完成问答": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    626,
+                    127,
+                    132,
+                    52
+                ],
+                "expected": [
+                    "正确奖励"
+                ]
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入广场": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    735,
+                    602,
+                    99,
+                    31
+                ],
+                "expected": [
+                    "幻想广场"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "进入问答"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入问答": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    107,
+                    254,
+                    98,
+                    35
+                ],
+                "expected": [
+                    "知识问答"
+                ]
+            }
+        },
+        "pre_wait_freezes": 150,
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -16,
+                    -40,
+                    43,
+                    27
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]下一题",
+            "[JumpBack]问答界面",
+            "完成问答"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "问答界面": {
+        "max_hit": 10,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    807,
+                    270,
+                    102,
+                    35
+                ],
+                "expected": [
+                    "知识问答"
+                ]
+            }
+        },
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "回答问题"
+            }
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

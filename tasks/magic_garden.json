@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "magic_garden",
+            "label": "魔法园",
+            "entry": "返回主界面",
+            "description": "进入魔法园并完成战斗",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "mfy_入口"
+                    ]
+                }
+            }
+        }
+    ]
+}

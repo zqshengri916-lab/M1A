@@ -1,0 +1,17 @@
+{
+    "task": [
+        {
+            "name": "close_game",
+            "label": "关闭游戏",
+            "entry": "返回主界面",
+            "description": "关闭游戏进程",
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "关闭游戏"
+                    ]
+                }
+            }
+        }
+    ]
+}

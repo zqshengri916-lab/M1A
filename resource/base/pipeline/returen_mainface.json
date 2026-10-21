@@ -1,0 +1,39 @@
+{
+    "$__mpe_config_returen_mainface": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "returen_mainface",
+            "prefix": "",
+            "savedViewport": {
+                "x": -3159,
+                "y": -388,
+                "zoom": 1.81
+            },
+            "version": "v2.1.0"
+        }
+    },
+    "返回主界面": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2159,
+                "y": 415
+            }
+        },
+        "action": {
+            "param": {
+                "custom_action": "返回主界面"
+            },
+            "type": "Custom"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

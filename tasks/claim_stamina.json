@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "claim_stamina",
+            "label": "领取体力",
+            "entry": "返回主界面",
+            "description": "领取爱心便当体力",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "爱心便当"
+                    ]
+                }
+            }
+        }
+    ]
+}

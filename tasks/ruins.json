@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "ruins",
+            "label": "遗迹",
+            "entry": "返回主界面",
+            "description": "进入遗迹",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "ruins_点击冒险"
+                    ]
+                }
+            }
+        }
+    ]
+}

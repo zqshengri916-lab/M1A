@@ -1,0 +1,172 @@
+{
+    "签到": {
+        "$__mpe_code": {
+            "position": {
+                "x": 398,
+                "y": 550
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "前往"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "Tap独家签到"
+                ],
+                "roi": [
+                    7,
+                    75,
+                    198,
+                    517
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "关闭tap": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1649,
+                "y": 679
+            }
+        },
+        "action": {
+            "param": {
+                "package": "com.taptap"
+            },
+            "type": "StopApp"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "前往": {
+        "$__mpe_code": {
+            "position": {
+                "x": 728,
+                "y": 592
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    1025,
+                    620,
+                    1,
+                    1
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "立即签到"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "复制兑换码": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1364,
+                "y": 624
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "关闭tap"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "复制"
+                ],
+                "roi": [
+                    205,
+                    660,
+                    296,
+                    65
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "立即签到": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1040,
+                "y": 624
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "复制兑换码"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "立即签到"
+                ],
+                "roi": [
+                    383,
+                    1193,
+                    135,
+                    51
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

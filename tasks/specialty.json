@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "specialty",
+            "label": "特产运输",
+            "entry": "返回主界面",
+            "description": "完成特产运输",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "点击运输"
+                    ]
+                }
+            }
+        }
+    ]
+}

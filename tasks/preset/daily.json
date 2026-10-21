@@ -1,0 +1,88 @@
+{
+    "preset": [
+        {
+            "name": "daily",
+            "label": "每日任务",
+            "description": "每日一键流程：开游戏 → 日常任务 → 周常（默认不勾）→ 关游戏",
+            "task": [
+                {
+                    "name": "start_game"
+                },
+                {
+                    "name": "daily_claim_all"
+                },
+                {
+                    "name": "claim_stamina"
+                },
+                {
+                    "name": "feast"
+                },
+                {
+                    "name": "seven_day_deals"
+                },
+                {
+                    "name": "limited_reward"
+                },
+                {
+                    "name": "tap_checkin"
+                },
+                {
+                    "name": "answer_question"
+                },
+                {
+                    "name": "specialty"
+                },
+                {
+                    "name": "manor"
+                },
+                {
+                    "name": "alliance"
+                },
+                {
+                    "name": "arena"
+                },
+                {
+                    "name": "summon"
+                },
+                {
+                    "name": "memory_space"
+                },
+                {
+                    "name": "magic_garden"
+                },
+                {
+                    "name": "solo_boss",
+                    "option": {
+                        "solo_boss_select": "lv30 铁甲将军"
+                    }
+                },
+                {
+                    "name": "world_boss",
+                    "option": {
+                        "world_boss_select": "lv30 铁甲将军",
+                        "select_team": "队伍1"
+                    }
+                },
+                {
+                    "name": "abyss",
+                    "enabled": false
+                },
+                {
+                    "name": "treasure_cave",
+                    "enabled": false
+                },
+                {
+                    "name": "wasteland",
+                    "enabled": false
+                },
+                {
+                    "name": "ruins",
+                    "enabled": false
+                },
+                {
+                    "name": "close_game"
+                }
+            ]
+        }
+    ]
+}

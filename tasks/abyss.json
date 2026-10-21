@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "abyss",
+            "label": "深渊",
+            "entry": "返回主界面",
+            "description": "进入深渊并一键扫荡",
+            "group": [
+                "weekly"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "sy_进入冒险"
+                    ]
+                }
+            }
+        }
+    ]
+}

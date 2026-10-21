@@ -1,0 +1,13 @@
+/.nicegui
+/.venv
+/.trae
+/cache
+/config
+/debug
+/tests
+/maafw
+/mxu.exe
+/mxu.pdb
+
+__pycache__/
+*.pyc

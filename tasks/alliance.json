@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "alliance",
+            "label": "联盟",
+            "entry": "返回主界面",
+            "description": "联盟捐献物资并领取礼物",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入联盟"
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "tap_checkin",
+            "label": "Tap签到",
+            "entry": "返回主界面",
+            "description": "完成 TapTap 独家签到并复制兑换码",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "签到"
+                    ]
+                }
+            }
+        }
+    ]
+}

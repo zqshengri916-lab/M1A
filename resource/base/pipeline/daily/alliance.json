@@ -1,0 +1,292 @@
+{
+    "$__mpe_config_alliance": {
+        "$__mpe_code": {
+            "coordinateMode": "absolute-v1",
+            "filename": "alliance",
+            "prefix": "",
+            "savedViewport": {
+                "x": -1619,
+                "y": -117,
+                "zoom": 1.37
+            },
+            "version": "v1.9.1"
+        }
+    },
+    "木材": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1236,
+                "y": 0
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    408,
+                    611,
+                    44,
+                    17
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "返回联盟界面"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    1201,
+                    73,
+                    40,
+                    40
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "repeat": 4,
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "礼物": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1827,
+                "y": 310
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "领取礼物"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    156,
+                    501,
+                    38,
+                    40
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "粮食": {
+        "$__mpe_code": {
+            "position": {
+                "x": 942,
+                "y": 11
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "木材"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "捐献"
+                ],
+                "roi": [
+                    136,
+                    603,
+                    52,
+                    35
+                ]
+            },
+            "type": "OCR"
+        },
+        "repeat": 4,
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "返回联盟界面": {
+        "$__mpe_code": {
+            "position": {
+                "x": 1521,
+                "y": 99
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    74,
+                    38,
+                    1,
+                    1
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "礼物"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入仓库": {
+        "$__mpe_code": {
+            "position": {
+                "x": 636,
+                "y": -6
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "粮食"
+        ],
+        "recognition": {
+            "param": {
+                "roi": [
+                    429,
+                    355,
+                    36,
+                    41
+                ],
+                "template": [
+                    "operator/!.png"
+                ]
+            },
+            "type": "TemplateMatch"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "进入联盟": {
+        "$__mpe_code": {
+            "position": {
+                "x": 327,
+                "y": 73
+            }
+        },
+        "action": {
+            "param": {
+                "target": [
+                    237,
+                    619,
+                    17,
+                    24
+                ]
+            },
+            "type": "Click"
+        },
+        "next": [
+            "进入仓库",
+            "礼物"
+        ],
+        "recognition": {
+            "param": {
+                "expected": [
+                    "联盟"
+                ],
+                "roi": [
+                    223,
+                    638,
+                    49,
+                    27
+                ]
+            },
+            "type": "OCR"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "领取礼物": {
+        "$__mpe_code": {
+            "position": {
+                "x": 2112,
+                "y": 309
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "recognition": {
+            "param": {
+                "expected": [
+                    "一键领取"
+                ],
+                "roi": [
+                    139,
+                    639,
+                    108,
+                    32
+                ]
+            },
+            "type": "OCR"
+        },
+        "repeat": 2,
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

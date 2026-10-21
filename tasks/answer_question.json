@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "answer_question",
+            "label": "回答问题",
+            "entry": "返回主界面",
+            "description": "前往幻想广场完成知识问答",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入广场"
+                    ]
+                }
+            }
+        }
+    ]
+}

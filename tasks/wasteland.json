@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "wasteland",
+            "label": "荒原",
+            "entry": "返回主界面",
+            "description": "进入荒原并开启自动作战",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入荒原"
+                    ]
+                }
+            }
+        }
+    ]
+}

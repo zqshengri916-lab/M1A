@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "memory_space",
+            "label": "记忆空间",
+            "entry": "返回主界面",
+            "description": "进入记忆空间并完成关卡",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "jykj_进入冒险"
+                    ]
+                }
+            }
+        }
+    ]
+}

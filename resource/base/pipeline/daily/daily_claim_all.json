@@ -1,0 +1,135 @@
+{
+    "进入任务": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    104,
+                    145,
+                    59,
+                    33
+                ],
+                "expected": [
+                    "任务"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    61,
+                    147,
+                    30,
+                    24
+                ]
+            }
+        },
+        "next": [
+            "一键领取"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "一键领取": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    940,
+                    619,
+                    98,
+                    36
+                ],
+                "expected": [
+                    "一键领取"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "奖励找回"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "奖励找回": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    90,
+                    376,
+                    116,
+                    36
+                ],
+                "expected": [
+                    "奖励找回"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "next": [
+            "一键领取2"
+        ],
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    },
+    "一键领取2": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    870,
+                    645,
+                    109,
+                    36
+                ],
+                "expected": [
+                    "一键领取"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "focus": {
+            "Node.Action.Starting": "{name} 开始执行",
+            "Node.PipelineNode.Failed": {
+                "content": "{name} 执行失败",
+                "display": [
+                    "log",
+                    "toast"
+                ]
+            }
+        }
+    }
+}

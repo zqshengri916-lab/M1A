@@ -1,0 +1,20 @@
+{
+    "task": [
+        {
+            "name": "daily_claim_all",
+            "label": "一键每日每周",
+            "entry": "返回主界面",
+            "description": "打开任务界面并一键领取每日/每周奖励与奖励找回",
+            "group": [
+                "daily"
+            ],
+            "pipeline_override": {
+                "返回主界面": {
+                    "next": [
+                        "进入任务"
+                    ]
+                }
+            }
+        }
+    ]
+}
