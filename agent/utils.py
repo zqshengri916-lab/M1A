@@ -43,14 +43,24 @@ def get_detailbyTemplate(context: Context, roi, template: str):
 
 def match_ocr(
     context: Context,
-    text: str,
-    roi: tuple = [480,587,349,132],
-    replace: list = _REA2D) -> bool:
-    """根据 ROI 识别文本，返回是否匹配。"""
+    text: str = "",
+    roi: list = [480,587,349,132],
+    replace: list = _REA2D,
+    keywords: tuple[str, ...] | None = None) -> bool:
+    """根据 ROI 识别文本，返回是否匹配。
+
+    - keywords 非空：任一关键词出现在任意一段识别文本中即命中（不必完整匹配）
+    - 否则：与 ``text`` 完全相等才命中
+    """
     result = get_detailbyocr(context, roi, replace)
     if result is None:
         return False
-    return result.best_result.text == text
+
+    if keywords:
+        texts = [r.text for r in (result.all_results or []) if getattr(r, "text", "")]
+        return any(keyword in item for item in texts for keyword in keywords)
+
+    return result.best_result is not None and result.best_result.text == text
 
 def save_img(image, name: str = "temp.png") -> str | None:
     """保存截图到 logs/temp_pic，返回保存路径。失败或无图像时返回 None。"""

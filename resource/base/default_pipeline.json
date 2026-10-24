@@ -1,9 +1,5 @@
 {
-    "Default": {
-        "on_error": [
-            "[Anchor]返回主界面"
-        ]
-    },
+    
     "pre_delay": 400
 
 }

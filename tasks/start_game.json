@@ -3,7 +3,7 @@
         {
             "name": "start_game",
             "label": "启动游戏",
-            "entry": "打开游戏",
+            "entry": "启动前检查",
             "description": "启动游戏并进入主界面",
             "default_check": true
         }

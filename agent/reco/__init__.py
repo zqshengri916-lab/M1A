@@ -1,3 +1,1 @@
-from maa.agent.agent_server import AgentServer
-
-from .sink import SinkRecognition
+"""自定义识别包（当前仅包含供动作复用的识别工具）。"""

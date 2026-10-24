@@ -1,8 +1,11 @@
 /.nicegui
 /.venv
 /.trae
+/.tailtest
 /cache
 /config
+!config.monitor.json
+!config.question_bank.json
 /debug
 /tests
 /maafw

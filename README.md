@@ -1,18 +1,9 @@
 # M1A
 
-基于 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 的《异世界的城主大人》自动化项目，遵循 [ProjectInterface V2](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/3.3-ProjectInterfaceV2%E5%8D%8F%E8%AE%AE.md) 协议，可直接被 MXU 等通用客户端加载。
+基于 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 的《异世界的城主大人》自动化项目，
 
 - 控制器：ADB（Android 设备 / 模拟器）
 - 运行环境：Windows + Python 3.12（项目自带 `.venv`）
-- 流水线坐标按 **1280×720** 标定
-
-## 功能
-
-- **日常任务**：一键每日每周、领取体力、盛宴、七日特惠、限时回馈、Tap 签到、知识问答、特产运输、庄园、联盟、竞技场、召唤、记忆空间、魔法园、个人 Boss、世界 Boss
-- **周常任务**：深渊、藏宝洞
-- **每日预设**：一条任务链即可完成「开游戏 → 日常 → 关游戏」
-- **Boss 可选**：个人 / 世界 Boss 支持 9 档 Boss（lv30 铁甲将军 ~ lv80 卡塔），按模板图识别；lv70 起自动先上滑列表再匹配
-- **自定义 Agent**：返回主界面、答题、关闭弹窗、选择战斗对象、物品增量记录等
 
 ## 目录结构
 
@@ -34,7 +25,6 @@ M1A/
 │   │   ├── image/operator/   # 模板图（含 boss/ 下的 boss_N_part.png）
 │   │   ├── model/ocr/        # OCR 模型（det.onnx / rec.onnx / keys.txt）
 │   │   └── default_pipeline.json
-│   ├── question_bank.json    # 答题题库
 │   └── announcement/         # 公告缓存
 ├── agent/                    # Python Agent：自定义识别 / 动作
 │   ├── main.py
@@ -44,7 +34,7 @@ M1A/
 │   └── loggerControl.py
 ├── maafw/                    # MaaFramework 运行库（MaaFramework.dll 等）
 ├── mxu.exe                   # MXU 客户端
-├── config/                   # MXU 实例配置（运行时生成）
+├── config/                   # MXU 配置 / 题库 / 监听配置
 ├── debug/                    # 运行日志（运行时生成）
 └── .venv/                    # Agent 运行环境
 ```

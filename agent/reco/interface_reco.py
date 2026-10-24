@@ -47,6 +47,7 @@ FULL_FACE: dict[str, int] = {
     "世界首领-个人版": 242,
     "魔法园": 243,
     "世界地图": 244,
+    
     "大世界": 245,
 }
 
@@ -83,6 +84,9 @@ class FaceReco:
         if context.tasker.controller.cached_image is None:
             logger.error("截图失败，无法识别界面")
             return 998
+        text = _ocr_text(context, (103, 139, 59, 42))
+        if "任务" in text:
+            return 101
 
         if "城市" in _ocr_text(context, (42,666,70,43)):
             return 245
@@ -93,9 +97,7 @@ class FaceReco:
                 logger.info("界面识别: %s (代码 %s)", face, code)
                 return code
 
-        text = _ocr_text(context, (103, 139, 59, 42))
-        if "任务" in text:
-            return 101
+        
 
         if "幻想广场" in text_full:
             text2 = _ocr_text(context, (634, 133, 103, 39))

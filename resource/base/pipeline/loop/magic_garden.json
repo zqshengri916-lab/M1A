@@ -51,9 +51,6 @@
             },
             "type": "Click"
         },
-        "next": [
-            "mfy_跳过"
-        ],
         "recognition": {
             "param": {
                 "expected": [
@@ -64,41 +61,6 @@
                     43,
                     44,
                     27
-                ]
-            },
-            "type": "OCR"
-        },
-        "focus": {
-            "Node.Action.Starting": "{name} 开始执行",
-            "Node.PipelineNode.Failed": {
-                "content": "{name} 执行失败",
-                "display": [
-                    "log",
-                    "toast"
-                ]
-            }
-        }
-    },
-    "mfy_跳过": {
-        "$__mpe_code": {
-            "position": {
-                "x": 4839,
-                "y": 779
-            }
-        },
-        "action": {
-            "type": "Click"
-        },
-        "recognition": {
-            "param": {
-                "expected": [
-                    "点击任意空白处关闭"
-                ],
-                "roi": [
-                    723,
-                    651,
-                    213,
-                    41
                 ]
             },
             "type": "OCR"

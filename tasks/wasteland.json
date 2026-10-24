@@ -2,7 +2,7 @@
     "task": [
         {
             "name": "wasteland",
-            "label": "荒原",
+            "label": "荒原（未完成）",
             "entry": "返回主界面",
             "description": "进入荒原并开启自动作战",
             "group": [

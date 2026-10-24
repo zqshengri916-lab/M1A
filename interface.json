@@ -50,6 +50,7 @@
         "tasks/alliance.json",
         "tasks/answer_question.json",
         "tasks/arena.json",
+        "tasks/auto_restart.json",
         "tasks/claim_stamina.json",
         "tasks/close_game.json",
         "tasks/daily_claim_all.json",

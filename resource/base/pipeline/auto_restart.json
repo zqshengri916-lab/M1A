@@ -1,15 +1,14 @@
 {
-    "开始游戏": {
-        "recognition": {
+    "卡死检测": {
+        "action": {
             "type": "Custom",
             "param": {
-                "custom_recognition": ""
-            }
-        },
-        "action": {
-            "type": "StartApp",
-            "param": {
-                "package": "com.fyf.newslggf"
+                "custom_action": "卡死检测",
+                "custom_action_param": {
+                    "package": "com.fyf.newslggf",
+                    "freeze_seconds": 60,
+                    "interval": 2
+                }
             }
         },
         "focus": {
@@ -21,6 +20,9 @@
                     "toast"
                 ]
             }
-        }
+        },
+        "next": [
+            "关闭游戏"
+        ]
     }
 }

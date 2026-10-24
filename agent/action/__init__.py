@@ -4,8 +4,9 @@ from . import arena
 from . import reIncrement
 from . import return_mainface
 from . import stop_tasker
+from . import watchdog
 from .quesetion import QuestionAction
-from .sink import SinkAction
+from .sink import SinkAPP, SinkAction
 
 
 @AgentServer.custom_action("返回主界面")
@@ -18,4 +19,12 @@ class SelectAnswerAction(QuestionAction):
 
 @AgentServer.custom_action("关闭弹窗")
 class ClosePopupAction(SinkAction):
+    pass
+
+@AgentServer.custom_action("应用启动检查")
+class CheckAppStart(SinkAPP):
+    pass
+
+@AgentServer.custom_action("卡死检测")
+class FreezeDetect(watchdog.FreezeDetectAction):
     pass
